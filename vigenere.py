@@ -1,5 +1,8 @@
-mensaje="mnvze://10.10.10.17/8zb5ra10m915218697q1h658wfoq0zc8/frmfycu/sp_ptr"
-key="FUCKMYBRAIN"
+import sys
+
+def help_panel():
+    print("Usage :")
+    print("python3 vigenere.py 'mensaje' 'key' ")
 
 
 def identify_caracter(caracter):
@@ -51,7 +54,7 @@ def letra_por_letra(key,mensaje,es_minus,result):
             contador=0
 
 
-def vigenere():
+def vigenere(mensaje,key):
     result=[]
     if(len(mensaje)==len(key)):
         for i in range(len(mensaje)):
@@ -105,9 +108,16 @@ def vigenere():
                 letter_key=change_upper(key[i])
                 letter_message=change_upper(mensaje[i])
                 letra_por_letra(letter_key,letter_message,es_minus,result)
-    print('')
+    print("Resultado : ")
     for i in result:
         print(i,end='')
+    print('')
 
 
-vigenere()
+try:
+    mensaje=str(sys.argv[1])
+    key=str(sys.argv[2])
+    vigenere(mensaje,key)
+except:
+    help_panel()
+
