@@ -65,7 +65,6 @@ def vigenere(mensaje,key):
     elif(len(mensaje) > len(key)):
         numero_temp=0
         tmp_bool=False
-        guardado=False
         for i in range(len(mensaje)):
             if(i >= len(key)):            
                 if(identify_caracter(mensaje[i])):
@@ -97,17 +96,36 @@ def vigenere(mensaje,key):
                         tmp_bool=True
 
     else:
+        numero_temp=0
+        tmp_bool=False
         for i in range(len(key)):
-            if(i >= len(mensaje)):
-                es_minus=is_minus(mensaje[i%len(mensaje)])
-                letter_key=change_upper(key[i])
-                letter_message=change_upper(mensaje[i%len(mensaje)])
-                letra_por_letra(letter_key,letter_message,es_minus,result)            
+            if(i >= len(mensaje)):            
+                if(identify_caracter(mensaje[i])):
+                    es_minus=is_minus(mensaje[i])
+                    letter_key=''
+                    letter_message=change_upper(mensaje[numero_temp%len(mensaje)])
+                    letter_key=change_upper(key[i])
+                    letra_por_letra(letter_key,letter_message,es_minus,result)
+                    numero_temp=numero_temp+1
+                else:
+                    result.append(mensaje[i])
+                    if(tmp_bool==False):
+                        numero_temp=i+1
+                        tmp_bool=True
             else:
-                es_minus=is_minus(mensaje[i%len(mensaje)])
-                letter_key=change_upper(key[i])
-                letter_message=change_upper(mensaje[i])
-                letra_por_letra(letter_key,letter_message,es_minus,result)
+                if(identify_caracter(mensaje[i])):
+                    es_minus=is_minus(mensaje[i])
+                    letter_key=''
+                    letter_message=change_upper(mensaje[numero_temp%len(mensaje)])
+                    letter_key=change_upper(key[i])
+                    letra_por_letra(letter_key,letter_message,es_minus,result)
+                    numero_temp=numero_temp+1
+                else:
+                    result.append(mensaje[i])
+                    if(tmp_bool==False):
+                        numero_temp=i
+                        tmp_bool=True
+
     print("Resultado : ")
     for i in result:
         print(i,end='')
